@@ -1,0 +1,153 @@
+#actividad
+ 
+Class Rectangulo 
+    pass
+ 
+giro=Rectangulo()
+giro.alto_dx = 75.5
+giro.ancho_dy = 50.0
+giro.rotacion = Rectangulo()  #incrustacion(rotacion en giro.)
+giro.rotacion.x = 0.0
+giro.rotacion.y = 0.0
+ 
+dimension_a = (giro.alto_dx, giro.ancho_dy)
+#aca rotamos e incrustamos la data
+def rotar_objeto (giro, inversion_x, inversion_y) :
+    giro.rotacion.x = inversion_y
+    giro.rotacion.y = inversion_x
+    rotacion=(giro.rotacion.x, giro.rotacion.y)
+    return rotacion
+#aca rotamos el objeto, se llama "mudar"
+def inversion(giro, data_x, data_y):
+    data_x, data_y = data_y, data_x
+    return data_x,data_y
+   
+dimension_b = rotar_objeto(giro, giro.alto_dx, giro.ancho_dy)
+ 
+inv_ret = inversion(giro, giro.alto_dx, giro.ancho_dy)
+ 
+#print("La figura de dimension ", dimension_a ," ahora tiene los valores: ", dimension_b)
+ 
+#print("Inversion de ", dimension_a, " es ", inv_ret)
+ 
+#la funcion copy de la libreria, duplica cualquier objeto
+gian1=Rectangulo()
+gian1.x= 4
+gian1.y= 8
+gian1.esquina=Rectangulo()
+gian1.esquina.x=0.1
+gian1.esquina.y= 0.2
+gian2=copy.deepcopy(gian1) #aca se llama a copy.copy y duplica obj
+gian1==gian2
+#print(gian2.esquina.x)
+ 
+la_vaina=Rectangulo()
+la_vaina.ancha=50.0
+la_vaina.alta=40.0
+ 
+def ampliar(vaina,dif_anc, dif_alt):
+    new_box=copy.deepcopy(la_vaina)
+    new_box.ancha=new_box.ancha+dif_anc
+    new_box.alta= new_box.alta+dif_alt
+    new_box=(new_box.ancha, new_box.alta)
+    return new_box
+ 
+nueva_caja=ampliar(la_vaina, 50.0, 60.0)
+ 
+print("La vaina tiene la dimension de: ", nueva_caja)
+ 
+ 
+
+
+
+#FUNCIONES PURAS Y FUNCIONES QUE MODIFICAN UN OBJETO::::
+#clases con funciones, funciones puras y modificadores
+ 
+class Hora:
+    pass
+ 
+hora_actual = Hora()
+hora_actual.horas = 11
+hora_actual.minutos = 58
+hora_actual.segundos = 190
+ 
+ 
+#funcion pura
+def sumar_hora(t1, t2) :
+    suma = Hora()
+    suma.segundos = t1.segundos + t2.segundos
+    suma.minutos = t1.minutos + t2.minutos
+    suma.horas = t1.horas + t2.horas
+    print("tiempo sin modif: ", suma.horas, suma.minutos, suma.segundos)
+    while suma.segundos >= 60 :
+        suma.minutos +=1
+        suma.segundos-=60
+    while suma.minutos >= 60 :
+        suma.horas += 1
+        suma.minutos -= 60
+    result = suma.horas, suma.minutos, suma.segundos
+    return result
+ 
+#modificadores
+def incremento(hora_actual, segundos) :
+    hora_actual.segundos = hora_actual.segundos + segundos
+    while hora_actual.segundos >= 60 :
+        hora_actual.segundos-=60
+        hora_actual.minutos+=1
+    while hora_actual.minutos >= 60 :
+        hora_actual.minutos-= 60
+        hora_actual.horas += 1
+        hora_act= hora_actual.segundos, hora_actual.minutos
+    return hora_act
+ 
+hora_pan = Hora()
+hora_pan.horas = 3
+hora_pan.minutos = 15
+hora_pan.segundos = 54
+ 
+resultado = sumar_hora( hora_actual, hora_pan)
+ 
+print( "El pan estara listo a las : " , resultado)
+ 
+print("_"*30)
+caca=incremento(hora_actual, 100)
+print("FUNCION modificador ", caca)
+
+
+###METODO: son Funciones dentro de clases 
+
+ 
+class Hora:
+    def __init__ (self) :
+        return
+#el METODO va DENTRO de la clase
+    #def imprime_hora_met(hora):
+        #print("La hora actual es: ", hora.horas, ":", hora.minutos, ":", hora.segundos)
+    def incremento_met(self, segundos) :
+        self.segundos = self.segundos + segundos
+        while self.segundos >= 60 :
+            self.segundos -= 60
+            self.minutos += 1
+        while self.minutos >= 60 :
+            self.minutos -= 60
+            self.horas += 1
+        return self.horas, self.minutos, self.segundos
+ 
+ 
+hora = Hora()
+hora.horas = 11
+hora.minutos = 58
+hora.segundos = 59
+hora.incremento_met(200)
+print("La hora actual es: ", hora.horas, ":", hora.minutos, ":", hora.segundos)
+ 
+#hora.imprime_hora_met()#con esto llamo al metodo
+ 
+#asì es una funcion comun
+#def imprime_hora(hora) :
+#    print("La hora actual es: ", hora.horas, ":", hora.minutos, ":", hora.segundos)
+#    return
+#imprime_hora(hora)
+ 
+ 
+
